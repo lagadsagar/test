@@ -25,7 +25,16 @@ const getStudentById = (request, response) => {
     });
 };
 
-
+const createTable = (request, response) => {
+    pool.query(
+        'CREATE TABLE IF NOT EXISTS "student" (id SERIAL PRIMARY KEY, name VARCHAR(100), age INT, city VARCHAR(400), phone BIGINT)',
+        (error, results) => {
+        if (error) {
+            return response.status(500).json({ error: "Failed to create student table", message: error.message });
+        }
+        response.status(201).json({ message: "Table created successfully" });
+    });
+};
 
 
 const createStudent = (request, response) => {
@@ -74,6 +83,7 @@ const deleteStudent = (request, response) => {
 module.exports = {
     getStudents,
     getStudentById,
+    createTable,
     createStudent,
     updateStudent,
     deleteStudent

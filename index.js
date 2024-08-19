@@ -1,7 +1,8 @@
 
 const express = require('express')
-const bodyParser=require("body-Parser")
-const {getStudents, getStudentById, createStudent, updateStudent, deleteStudent} = require("./queries");
+
+const bodyParser = require('body-parser');
+const {getStudents, getStudentById, createStudent, updateStudent, createTable, deleteStudent} = require("./queries");
 const api_key = require('./apikey');
 const user = require("./admin.js")
 
@@ -19,8 +20,9 @@ app.use(bodyParser.urlencoded({
 app.get("/students", getStudents);
 app.get("/students/:id", user, getStudentById);
 app.put("/students/:id", user, updateStudent);
-app.post("/students", api_key, user, createStudent);
-app.delete("/students/:id",api_key, user, deleteStudent);
+app.post("/create-table", createTable);
+app.post("/students", api_key, createStudent);
+app.delete("/students/:id",api_key, deleteStudent);
 
 
 app.listen(port, () => {
